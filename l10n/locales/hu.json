@@ -1,0 +1,260 @@
+{
+	"_translators": [
+		{
+			"email": "deathamns(at)gmail(dot)com",
+			"name": "Deathamns"
+		}
+	],
+	"groupless": {
+		"appDescriptionLong": {
+			"#": 4,
+			">": "Gazdagítja a böngésző beépített média nézőkéjét különböző tulajdonságokkal és funkcionalitással.\n\nFunkciók\n- Alapértelmezett méretezési módok, és azok közti váltás gyorsbillentyűkkel illetve egérgombokkal\n- Testre-szabható CSS (egyéni háttérszín, görgősávok elrejtése...)\n- Egyéni adatok megjelenítése a fül címében\n- Lebegő menü (megjelenítés az egérkurzor bal-felső sarokba helyezésével)\n- Nagyítás egérgörgővel (tiltva alapértelmezetten)\n- Tartalom középre rendezése (alapértelmezett)\n- Forgatás/Tükrözés (gyorsbillentyűkkel vagy a menüből)\n- Kép címének elküldése különböző online szolgáltatásokhoz (mint például kép keresés)\n- Képek kinyerése animált képekből (GIF, APNG, WEBP)\n- SVG, data:URI támogatása\n- Média fájlok megjelenítésének kényszerítése letöltés helyett\n- DASH, HLS, MSS formátumok lejátszása (böngésző függő)\n- Tetszőleges média attribútumok megadása (autoplay, loop, controls, mute, volume)\n- Képek megnyitása jobb egérgomb nyomva-tartásával vagy billentyűparanccsal (titlva alapból)\n\nTovábbi részletekért nézz rá a beállítások oldalra."
+		},
+		"appDescriptionShort": {
+			"#": 3,
+			">": "A beépített média nézőke funkcióit bővíti."
+		}
+	},
+	"options": {
+		"buttonReset": {
+			"#": 0,
+			">": "Alap"
+		},
+		"buttonSave": {
+			"#": 0,
+			">": "Mentés"
+		},
+		"centerContent": {
+			"#": 0,
+			">": "Tartalom középre helyezése"
+		},
+		"clickOverDoc": {
+			"#": 0,
+			">": "Kattintások engedélyezése az egész oldalon"
+		},
+		"customCss": {
+			"#": 0,
+			">": "Egyedi stílus (CSS)"
+		},
+		"customCssTextareaPh": {
+			"#": 0,
+			">": "Itt lehetseéges a háttér színének, kép keretének/árnyékának, stb. beállítása, illetve a görgősávok és a lebegő menü elrejtése.\nPéldákért vidd az egérkurzort a kérdőjel fölé, a színkódokhoz pedig használd a fenti színválasztót."
+		},
+		"customCssTip": {
+			"#": 2,
+			">": "<code>body {\n background: #f3f3f5; /* Bármilyen elfogadott background érték (szín, url(), színátmenet...). */\n overflow: hidden; /* Elrejti a görgősávot. \"hidden\" változtatása \"auto\"-ra a megjelenítésükhöz. */\n}\n\n#media {\n background: #eef; /* Más háttér kizárólag a képnek. */\n border: 10px solid white; /* Egyéni képkeret. */\n box-shadow: 0 0 10px grey; /* Kép körüli árnyék. */\n cursor: default !important; /* Az egérkurzor változatlan marad ezzel az értékkel. */\n}\n\n/* A szabad méretezés mask színe. */\n.mask { color: rgba(0, 0, 0, .4); }\n\n/* Menü elrejtése. */\n#menu { display: none; }\n\n/* Statikus menü. */\n#menu { display: block; }\n\n/* Menü elhelyezése: */\n#menu { top: auto; bottom: 0; } /* lent bal */\n#menu { left: auto; right: 0; } /* fent jobb */\n#menu { top: auto; left: auto; right: 0; bottom: 0; } /* lent jobb */\n\n/* Horizontális menü */\n#menu > ul { flex-direction: row; }\n</code>"
+		},
+		"defaultMode": {
+			"#": 0,
+			">": "Alap méretezés"
+		},
+		"disabled": {
+			"#": 0,
+			">": "kikapcsolva"
+		},
+		"extraFormats": {
+			"#": 0,
+			">": "Egyéb formátumok támogatása (DASH, HLS, MSS)"
+		},
+		"favicon": {
+			"#": 0,
+			">": "Egyéni ikon a fülön"
+		},
+		"faviconTip": {
+			"#": 2,
+			">": "A kép címe használható változóként a megadott értékben: <b>%url</b>"
+		},
+		"forceInlineMedia": {
+			"#": 0,
+			">": "Média fájlok kényszerített megjelenítése letöltés helyett"
+		},
+		"infoTranslations": {
+			"#": 1,
+			">": "Fordítások"
+		},
+		"longpressActionFitImage": {
+			"#": 0,
+			">": "szélességhez/magassághoz méretez"
+		},
+		"longpressActionWheelZoom": {
+			"#": 0,
+			">": "egérgörgővel való nagyítás ki/bekapcsolása"
+		},
+		"longpressLeft": {
+			"#": 0,
+			">": "Bal hosszan-tartás funkciója"
+		},
+		"longpressRight": {
+			"#": 0,
+			">": "Jobb hosszan-tartás funkciója"
+		},
+		"mediaAttributes": {
+			"#": 1,
+			">": "Média attribútumok"
+		},
+		"mediaAttributesTip": {
+			"#": 1,
+			">": "Használható attribútumok\n<b>autoplay</b> - automatikus indítás\n<b>loop</b> - lejátszás ismétlése\n<b>controls</b> - lejátszógombok megjelenítése\n<b>muted</b> - hang némítása\n<b>volume=0-100</b> - alapértelmezett hangerő (%)"
+		},
+		"mediaInfo": {
+			"#": 0,
+			">": "Képinformációk"
+		},
+		"mediaInfoTip": {
+			"#": 3,
+			">": "Egyéni adatok megjelenítése a fül címében, a következő változók felhaszanálásával:\n<b>%ow</b> - eredeti szélesség\n<b>%oh</b> - eredeti magasság\n<b>%ratio</b> - jelenlegi szélesség és magasság aránya\n<b>%w</b> - jelenlegi szélesség\n<b>%h</b> - jelenlegi magasság\n<b>%perc</b> - átméretezés százalékban\n<b>%url</b> - teljes cím\n<b>%name</b> - fájl neve\n<b>%size</b> - fájl mérete (nem minding működik)"
+		},
+		"minUpscale": {
+			"#": 0,
+			">": "Kis képek nagyítása"
+		},
+		"minUpscaleTip": {
+			"#": 1,
+			">": "A kisebb képek alapból nem méreteződnek az ablakhoz. Ez a beállítás az ellenkezőjére kényszeríti őket.\nAzok a képek méreteződnek fel, amelyek méretei nagyobbak, mint a százalékban megadott ablak szélessége vagy magassága (az előző beállítástól függ)."
+		},
+		"modeAutoFit": {
+			"#": 0,
+			">": "ablakhoz méretez"
+		},
+		"modeBestFit": {
+			"#": 0,
+			">": "illeszkedés az ablakhoz"
+		},
+		"modeNatural": {
+			"#": 0,
+			">": "eredeti méret"
+		},
+		"navGeneral": {
+			"#": 1,
+			">": "Beállítások"
+		},
+		"navInfo": {
+			"#": 0,
+			">": "Infó"
+		},
+		"opener": {
+			"#": 0,
+			">": "Képek megnyitása normál web-oldalkról"
+		},
+		"openerBoth": {
+			"#": 0,
+			">": "mindkettő"
+		},
+		"openerCtrlAltClick": {
+			"#": 0,
+			">": "Ctrl + Alt + jobb klikk"
+		},
+		"openerRightLong": {
+			"#": 0,
+			">": "jobb klikk hosszan-tartva"
+		},
+		"permisssionWarning": {
+			"#": 0,
+			">": "Az alábbi funkciók használatához további engedélyek szükségesek:"
+		},
+		"phClickForExample": {
+			"#": 1,
+			">": "kattints példákért..."
+		},
+		"scChangeVolume": {
+			"#": 0,
+			">": "<b>Fel / Le</b> Hangerő növelése/csökkentése"
+		},
+		"scCycleModes": {
+			"#": 0,
+			">": "Méretezések közti váltás: eredeti, szélességhez-, magassághoz méretez"
+		},
+		"scDragndrop": {
+			"#": 2,
+			">": "<b>Ctrl</b> vagy <b>Alt</b> nyomva-tartásával vonszolható a kép, ha az nem fér bele a nézetablakba"
+		},
+		"scFlipHorizontal": {
+			"#": 0,
+			">": "Vízszintes tükrözés"
+		},
+		"scFlipVertical": {
+			"#": 0,
+			">": "Függőleges tükrözés"
+		},
+		"scFloatMenu": {
+			"#": 0,
+			">": "A menü megjelenítéséhez mozgasd az egérkurzort az oldal bel felső szélére"
+		},
+		"scFreeZoom": {
+			"#": 0,
+			">": "<b>Shift + vonszolás</b> nagyít a kijelölt részre, <b>Ctrl</b> tartásával a kijelölés mozgatható"
+		},
+		"scHorizontalScroll": {
+			"#": 1,
+			">": "A kép vízszintes mozgatása az oldal bal also élén való görgetéssel lehetséges."
+		},
+		"scImgBg": {
+			"#": 0,
+			">": "Kép hátterének váltogatása: alap, fekete, fehér, sakkminta, vagy a <b>Shift</b> lenyomásával egyéni érték megadása"
+		},
+		"scModeContain": {
+			"#": 0,
+			">": "Ablakhoz méretez"
+		},
+		"scModeFill": {
+			"#": 0,
+			">": "Ablakot kitölt"
+		},
+		"scModeNatural": {
+			"#": 0,
+			">": "Eredeti méret"
+		},
+		"scPixelate": {
+			"#": 0,
+			">": "Pixeles kép"
+		},
+		"scReset": {
+			"#": 0,
+			">": "<b>Esc</b> a képet az eredeti állapotára állítja, vagy kilép a szabad méretezésből"
+		},
+		"scRotateLeft": {
+			"#": 0,
+			">": "Forgatás jobbra"
+		},
+		"scRotateRight": {
+			"#": 0,
+			">": "Forgatás balra"
+		},
+		"scTogglePlay": {
+			"#": 0,
+			">": "<b>Space</b> Médiafájlok lejátszása/leállítása"
+		},
+		"scWheelZoom": {
+			"#": 0,
+			">": "Egérgörgővel való nagyítás ki/bekapcsolása"
+		},
+		"scZoom": {
+			"#": 0,
+			">": "Nagyítás / kicsinyítés"
+		},
+		"sendTo": {
+			"#": 0,
+			">": "Kép küldése..."
+		},
+		"shortcuts": {
+			"#": 0,
+			">": "Billentyűparancsok"
+		},
+		"viewDataURI": {
+			"#": 0,
+			">": "Nézőke alkalmazása data: címekre"
+		},
+		"viewSvg": {
+			"#": 0,
+			">": "Nézőke alkalmazása SVG fájlokra"
+		},
+		"wheelZoom": {
+			"#": 0,
+			">": "Nagyítás görgetéssel"
+		},
+		"wheelZoomWithKey": {
+			"#": 0,
+			">": "Nagyítás görgetéssel gomb nyomva-tartásával"
+		}
+	}
+}

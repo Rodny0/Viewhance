@@ -1,0 +1,217 @@
+{
+	"_translators": [
+		{
+			"email": "nightroad(at)mail(dot)com",
+			"name": "DurianZheitk",
+			"realname": "Javier Vera"
+		},
+		{
+			"name": "alm",
+			"realname": "A LM"
+		}
+	],
+	"groupless": {
+		"appDescriptionLong": {
+			"#": 3,
+			">": "Enriquece el visor de imágenes y vídeo del navegador con personalizaciones y funcionalidades adicionales.\n\nCaracterísticas:\n- Cambio entre modos de escalado predeterminados mediante atajos de teclado o pulsaciones del ratón\n- Estilo CSS personalizado (color de fondo para la página o multimedia, barras de desplazamiento ocultas...)\n- Información personalizada acerca de la multimedia en el título de la pestaña\n- Menú flotante (colocar el cursor sobre la esquina superior izquierda)\n- Ampliación (zoom) con la rueda del ratón (deshabilitado por defecto)\n- Centrar el contenido (predeterminado)\n- Girar/Voltear (mediante atajos de teclado o desde el menú)\n- Envío de la imagen a diferentes servicios (tales como búsqueda inversa de imágenes)\n- Extracción de cuadros en imágenes animadas (formatos soportados: GIF, APNG, WEBP)\n- Atributos multimedia personalizables (comenzar reproducción automáticamente, repetir la reproducción, mostrar los controles del reproductor, silenciar, volumen)\n- Abrir imágenes desde páginas web mediante una pulsación larga con el botón derecho o un atajo de teclado (deshabilitado por defecto)\n\nConsulte la página de Opciones para más detalles."
+		},
+		"appDescriptionShort": {
+			"#": 2,
+			">": "Funciones adicionales para el visor de imágenes y vídeo del navegador."
+		}
+	},
+	"options": {
+		"buttonReset": {
+			"#": 0,
+			">": "Predeterminado"
+		},
+		"buttonSave": {
+			"#": 0,
+			">": "Guardar"
+		},
+		"centerContent": {
+			"#": 0,
+			">": "Centrar el contenido"
+		},
+		"customCss": {
+			"#": 0,
+			">": "Estilo personalizado (CSS)"
+		},
+		"customCssTextareaPh": {
+			"#": 0,
+			">": "Cambia el color de fondo, bordes/sombras de la imagen, y esconde las barras de desplazamiento o el menú flotante.\nColoca el cursor sobre el signo de interrogación a la izquierda para ver ejemplos. Utiliza el selector de color (arriba a la derecha) para obtener códigos de color."
+		},
+		"customCssTip": {
+			"#": 1,
+			">": "<code>body {\n  background: #f3f3f5; /* Cualquier atributo válido para background (color, url(), gradient...). */\n  overflow: hidden; /* Oculta las barras de desplazamiento. Para mostrarlas, cambia \"hidden\" por \"auto\". */\n}\n\n#media {\n  background: #eef; /* Cambia el fondo de la imagen. */\n  border: 10px solid white; /* Borde de la imagen. */\n  box-shadow: 0 0 10px grey; /* Sombra de la imagen. */\n  cursor: default !important; /* No permite que el puntero cambie. */\n}\n\n.mask {\n  color: rgba(0, 0, 0, .4); /* Color para el modo de ampliación de selección. */\n}\n\n#menu {\n  display: none; /* Deshabilita el menú flotante. */\n}\n</code>"
+		},
+		"defaultMode": {
+			"#": 0,
+			">": "Modo inicial de escalado"
+		},
+		"disabled": {
+			"#": 0,
+			">": "deshabilitado"
+		},
+		"favicon": {
+			"#": 0,
+			">": "Icono personalizado"
+		},
+		"faviconTip": {
+			"#": 2,
+			">": "Esta opción permite establecer un <i>favicono</i> personalizado para las pestañas con imágenes abiertas.\nLa dirección de la imagen puede ser usada como variable: <b>%url</b>"
+		},
+		"infoTranslations": {
+			"#": 1,
+			">": "Traducciones"
+		},
+		"longpressActionFitImage": {
+			"#": 0,
+			">": "ajustar a la anchura/altura"
+		},
+		"longpressLeft": {
+			"#": 0,
+			">": "Acción para una pulsación larga con el botón izquierdo"
+		},
+		"longpressRight": {
+			"#": 0,
+			">": "Acción para una pulsación larga con el botón derecho"
+		},
+		"mediaAttributes": {
+			"#": 1,
+			">": "Atributos multimedia"
+		},
+		"mediaAttributesTip": {
+			"#": 1,
+			">": "Atributos aceptados\n<b>autoplay</b> - comenzar reproducción automáticamente\n<b>loop</b> - repetir la reproducción\n<b>controls</b> - mostrar los controles del reproductor\n<b>muted</b> - sin sonido\n<b>volume=0-100</b> - volumen por defecto (porcentaje)"
+		},
+		"mediaInfo": {
+			"#": 0,
+			">": "Información de la imagen"
+		},
+		"mediaInfoTip": {
+			"#": 2,
+			">": "Muestra información sobre el contenido en el título de la pestaña. Puede contener las siguientes variables:\n<b>%ow</b> - anchura original\n<b>%oh</b> - altura original\n<b>%ratio</b> - anchura actual / altura actual\n<b>%w</b> - anchura actual\n<b>%h</b> - altura actual\n<b>%perc</b> - porcentaje del tamaño original\n<b>%url</b> - dirección URL\n<b>%name</b> - nombre del archivo"
+		},
+		"minUpscale": {
+			"#": 0,
+			">": "Ampliar imágenes pequeñas"
+		},
+		"minUpscaleTip": {
+			"#": 1,
+			">": "Por defecto, las imágenes pequeñas no serán ampliadas para encajar en la ventana de visualización. Esta opción las fuerza a hacerlo.\nEl valor esta dado en porcentaje, e indica a la extensión que amplié las imágenes que sean mayores al porcentaje en anchura o altura de la ventana de visualización (esto depende de la opción anterior).\n   Ejemplo: si el valor esta fijado en 20%, y una imagen ocupa el 30% de la ventana de visualización, será ampliada de acuerdo a la opción anterior (Modo inicial de escalado)."
+		},
+		"modeAutoFit": {
+			"#": 0,
+			">": "ajustar"
+		},
+		"modeBestFit": {
+			"#": 0,
+			">": "mejor ajuste"
+		},
+		"modeNatural": {
+			"#": 0,
+			">": "tamaño original"
+		},
+		"navGeneral": {
+			"#": 1,
+			">": "General"
+		},
+		"navInfo": {
+			"#": 0,
+			">": "Información"
+		},
+		"opener": {
+			"#": 0,
+			">": "Abrir imágenes desde páginas web"
+		},
+		"openerBoth": {
+			"#": 0,
+			">": "ambas"
+		},
+		"openerCtrlAltClick": {
+			"#": 0,
+			">": "Ctrl + Alt + clic derecho"
+		},
+		"openerRightLong": {
+			"#": 0,
+			">": "una pulsación larga con el botón derecho"
+		},
+		"phClickForExample": {
+			"#": 1,
+			">": "haz clic para mostrar ejemplos..."
+		},
+		"scChangeVolume": {
+			"#": 0,
+			">": "<b>Arriba / Abajo</b> Aumentar/disminuir volumen"
+		},
+		"scCycleModes": {
+			"#": 0,
+			">": "Cambiar entre los modos de escalado: tamaño original, ajustar a la anchura, ajustar a la altura"
+		},
+		"scDragndrop": {
+			"#": 2,
+			">": "<b>Mantén presionado Ctrl o Alt</b> para permitir arrastrar y soltar, o arrastra desde el borde derecho de la imagen (si cabe en la ventana)"
+		},
+		"scFlipHorizontal": {
+			"#": 0,
+			">": "Voltear horizontalmente"
+		},
+		"scFlipVertical": {
+			"#": 0,
+			">": "Voltear verticalmente"
+		},
+		"scFloatMenu": {
+			"#": 0,
+			">": "Mueve el cursor a la esquina superior izquierda de la pantalla para mostrar el menú"
+		},
+		"scFreeZoom": {
+			"#": 0,
+			">": "<b>Shift + arrastrar</b> sobre la imagen para usar el modo de ampliación de selección, mantén presionado <b>Ctrl</b> (sin soltar <b>Shift</b>) para mover la selección"
+		},
+		"scHorizontalScroll": {
+			"#": 1,
+			">": "Para desplazar la imagen horizontalmente, utiliza la rueda del ratón sobre el borde inferior izquierdo"
+		},
+		"scModeContain": {
+			"#": 0,
+			">": "Ajuste automático"
+		},
+		"scModeNatural": {
+			"#": 0,
+			">": "Tamaño original"
+		},
+		"scReset": {
+			"#": 0,
+			">": "<b>Esc</b> devolverá la imagen a su forma original, o saldrá del modo de ampliación de selección"
+		},
+		"scRotateLeft": {
+			"#": 0,
+			">": "Girar a la izquierda"
+		},
+		"scRotateRight": {
+			"#": 0,
+			">": "Girar a la derecha"
+		},
+		"scTogglePlay": {
+			"#": 0,
+			">": "<b>Barra espaciadora</b> Alterna entre reproducción/pausa"
+		},
+		"scZoom": {
+			"#": 0,
+			">": "Acercar/alejar la imagen"
+		},
+		"sendTo": {
+			"#": 0,
+			">": "Enviar imagen a..."
+		},
+		"shortcuts": {
+			"#": 0,
+			">": "Atajos"
+		},
+		"wheelZoom": {
+			"#": 0,
+			">": "Ampliar <i>(zoom)</i> con la rueda del ratón"
+		}
+	}
+}

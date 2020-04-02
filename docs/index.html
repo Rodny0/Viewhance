@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="nofollow,noindex,noarchive,nocache">
+	<link rel="shortcut icon" href="img/viewhance_18.png">
+	<style>
+		html {
+			cursor: default;
+		}
+
+		body {
+			font: 13px verdana;
+			/*width: 120%;*/
+		}
+
+		a {
+			color: #0062ff;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: blue !important;
+		}
+
+		.FAQ {
+			float: right;
+			margin: 0 0 10px 10px;
+			max-width: 40%;
+			border-bottom: 1px solid #e5e5e5;
+			border-left: 1px solid #e5e5e5;
+			border-radius: 10px;
+			padding: 0 5px 0 10px;
+		}
+
+		.FAQ > ul {
+			list-style-type: square;
+			font-size: 0.9em;
+			padding: 0 0 0 10px;
+		}
+
+		.FAQ > ul > li > em {
+			font-weight: bold;
+			margin: 10px 0 3px;
+			display: block;
+		}
+
+		.FAQ li {
+			clear: both;
+		}
+
+		pre, code {
+			-moz-tab-size: 4;
+			-o-tab-size: 2;
+			tab-size: 2;
+			white-space: pre-wrap;
+			font: normal normal 400 14px/normal Consolas, Menlo, monospace;
+			color: black;
+		}
+
+		code {
+			padding: 4px;
+			display: inline-block;
+			border: 1px solid #ccc;
+		}
+
+		.versions > li:target {
+			background-color: #effbff;
+		}
+
+		.versions > li > b:hover {
+			color: #484848;
+		}
+
+		.zoom-in {
+			cursor: zoom-in;
+		}
+
+		.versions > li > pre {
+			margin: 5px 0 0;
+			overflow: hidden;
+			transition: max-height .3s;
+		}
+
+		#install {
+			max-width: 1000px;
+			text-align: center;
+		}
+		.browser-icon {
+			filter:  drop-shadow(0 0 1px grey);
+			vertical-align: middle;
+			width: 32px;
+			height: 32px;
+		}
+		#install > span {
+			display: block;
+			margin: 20px 0 15px;
+			font-size: small;
+			font-weight: bold;
+			letter-spacing: 1px;
+		}
+		#install > div {
+			position: relative;
+			display: inline-block;
+			font-family: "trebuchet ms", "lucida grande", "lucida sans unicode", "arial", "helvetica", sans-serif;
+			margin: 0 20px;
+		}
+		.fade {
+			opacity: .3;
+		}
+		#install > div > div {
+			font: 12px Tahoma, Consolas;
+			width: 1000%;
+			left: -450%;
+			top: 80%;
+			text-align: left;
+			position: absolute;
+			display: inline-block;
+			padding: 5px;
+			background-color: #fff;
+			background: linear-gradient(to bottom, #fff, rgba(245, 245, 255, .9));
+			border: 1px solid #ddd;
+			border-radius: 6px;
+			box-shadow: 0 0 10px #ddd;
+			opacity: 0;
+			visibility: hidden;
+			transition: visibility 0s .2s, opacity .3s, top .2s;
+		}
+		#install > div:hover > div {
+			transition-delay: .1s;
+			top: 100%;
+			visibility: visible;
+			opacity: 1;
+		}
+		#install > a {
+			text-decoration: none;
+		}
+
+		.menu-icons {
+			border-collapse: collapse;
+		}
+
+		.menu-icons td:first-child {
+			padding: 5px 15px;
+			background: #4d4d4d;
+		}
+
+		.menu-icons tr:first-child > td:first-child {
+			padding-top: 15px;
+		}
+
+		.menu-icons tr:last-child > td:first-child {
+			padding-bottom: 15px;
+		}
+
+		.menu-icons td:first-child > svg {
+			width: 25px;
+			height: 25px;
+			cursor: pointer;
+			fill: rgba(0,0,0,0);
+			stroke: #fff;
+			stroke-width: 7px;
+			color: #fff;
+			transition: opacity .2s;
+		}
+
+		.menu-icons td:first-child > svg:hover {
+			opacity: .6;
+		}
+
+		.menu-icons td:last-child {
+			padding-left: 10px;
+			vertical-align: middle;
+		}
+	</style>
+	<title>Viewhance :: Archive</title>
+</head>
+<body>
+	<div class="FAQ">
+		<h3>FAQ</h3>
+		<ul>
+			<li>
+				<h3>Where can I report issues?</h3>
+				<a href="https://github.com/Deathamns/Viewhance/issues">Here</a>.
+			</li>
+			<li>
+				<h3>Features</h3>
+				Not every feature will work in every browser, even if you have enabled it in the settings. Good example is media in-lining or streaming media (DASH, HLS, MSS) support, which requires intercepting network requests, and not every browser is capable to do that.
+			</li>
+			<li>
+				<h3>What the buttons do on the floating menu?</h3>
+				* - the wheel, and both left and right mouse buttons can be used on it
+				<table class="menu-icons">
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-cycle"/></svg></td>
+						<td>cycle through sizing modes *</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-zoom"/></svg></td>
+						<td>zoom *</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-flip"/></svg></td>
+						<td>flip *</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-rotate"/></svg></td>
+						<td>rotate *</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-filters"/></svg></td>
+						<td>filters - available only if the browser supports them. Each of them can be changed with mouse wheel and be reset with right click</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-reset"/></svg></td>
+						<td>reset image (same as pressing Escape)</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-send-hosts"/></svg></td>
+						<td>send the image to different services (like reverse image search)</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-frames"/></svg></td>
+						<td><b>extract frames</b> from animated images (GIF, APNG, WEBP) - left click for full frames, right click for frames as they are in the file / <b>bitrate selector</b> for streaming media</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-direct-view"/></svg></td>
+						<td>opens the file directly in case of SVGs or manifest files for streaming formats</td>
+					</tr>
+					<tr>
+						<td><svg><use xlink:href="img/menu_icons.svg#icon-options"/></svg></td>
+						<td>open preferences</td>
+					</tr>
+				</table>
+			</li>
+			<li>
+				<h3>How to change the menu position or its size?</h3>
+				You can achive that with <b>custom CSS</b>, which can be set at the options page. You can see examples if you hover over the question mark beside that option. Also you can inspect the menu in the DOM to see its structure if you want to customize it futher.
+			</li>
+			<li>
+				<h3>Hidden options</h3>
+				You can change hidden options by importing them at Options / Info. For example: <code>{"menuTriggerArea": ["10%", 100]}</code><br><br>
+
+				<code>menuTriggerArea</code> Custom trigger area for the menu (measured from the corner where the menu is placed). Possible values: [px, px] or ["%", "%"] or null (default, which is the size of the menu).<br><br>
+				<code>scaling</code> It fakes the original dimensions. Possible values: float (e.g., <b>1.5</b> for 150%), special value: <code>*</code> ignores device scaling, so it renders the media at 100%. If negative value is used, the device scaling is ignored first, then the absolute of the scale value is applied.
+			</li>
+		</ul>
+	</div>
+
+	<div style="padding: 20px 0 0 20px">
+	<b>Viewhance</b> is a browser extension that adds extra functionality to the browser's default image/media viewer. URL for sharing: <a href="https://tiny.cc/Viewhance"><b>https://tiny.cc/Viewhance</b></a><br>
+
+	<div id="install">
+		<span>Install the latest version for</span>
+		<div>
+			<a href="https://addons.mozilla.org/addon/viewhance/" rel="nofollow">
+				<img src="img/browser_icons/icon32_firefox.png" alt="Firefox" class="browser-icon">
+			</a>
+			<div>
+				The WebExtension version can be installed from <a href="https://addons.mozilla.org/en-US/firefox/addon/viewhance/">AMO</a>.<br>
+				If you're looking for the legacy version, which could potentially run on PaleMoon, Waterfox or other Gecko based browsers, then check out the <a href="https://drive.google.com/drive/folders/0Bx8fnUCX4W2IVU5Dd08yUU5VNUE">archive</a>.
+			</div>
+		</div>
+		<div>
+			<a href="https://chrome.google.com/webstore/detail/viewhance/impppjchnpfgknmbaaghfeopcgfoilac" rel="nofollow">
+				<img src="img/browser_icons/icon32_chrome.png" alt="Chrome" class="browser-icon">
+			</a>
+			<div>
+				Install from <a href="https://chrome.google.com/webstore/detail/impppjchnpfgknmbaaghfeopcgfoilac">Chrome Web Store</a>.<br>Other browsers based on the Chromium platform, or follow the WebExtension API are also able to run this version, such as Opera 15+, Vivaldi, Edge...
+			</div>
+		</div>
+		<div>
+			<img src="img/browser_icons/icon32_opera.png" alt="Opera" class="browser-icon">
+			<div>
+				To install on Opera 12, download the extension file and drop it into the browser window.
+				<br><br>
+				In Opera 15+, the extension must be manually enabled in the Extension manager (Ctrl+Shift+E) after install.
+				<br><br>
+				<div style="float: left; width: 50%; text-align: center">
+					<a href="https://drive.google.com/drive/folders/0Bx8fnUCX4W2IOTdESEFoM3luS1U" rel="nofollow" title="Install for Opera 12">
+						<img src="img/browser_icons/icon32_opera.png" alt="Opera 12" class="browser-icon"> <b>12</b> (oex)
+					</a>
+				</div>
+				<div style="float: left; width: 50%; text-align: center">
+					<a href="https://drive.google.com/drive/folders/0Bx8fnUCX4W2IOTdESEFoM3luS1U" rel="nofollow" title="Install for Opera 15+">
+						<img src="img/browser_icons/icon32_operc.png" alt="Opera 15+" class="browser-icon"> <b>15+</b> (crx)
+					</a>
+				</div>
+			</div>
+		</div>
+		<div>
+			<a href="http://extension.maxthon.com/detail/index.php?view_id=2527" rel="nofollow">
+				<img src="img/browser_icons/icon32_maxthon.png" alt="Maxthon" class="browser-icon">
+			</a>
+			<div>Install from <a href="https://extension.maxthon.com/detail/index.php?view_id=2527">Maxthon Extension Center</a>, or newer versions from the <a href="https://drive.google.com/drive/folders/0Bx8fnUCX4W2IOTdESEFoM3luS1U">archive</a>, because as it seems Maxthon doesn't really review extension updates anymore</div>
+		</div>
+		<div>
+			<a rel="nofollow" class="fade">
+				<img src="img/browser_icons/icon32_safari.png" alt="Safari 5.1+" class="browser-icon">
+			</a>
+			<div>You have to install it from source. Note that it is build with the legacy platform, and Safari 12 is the last release to support legacy extensions.</div>
+		</div>
+	</div>
+
+	<h3>Features</h3>
+	<pre>
+	- Default sizing modes and switching between them via shortcuts or with mouse clicks
+	- Custom CSS (background color for the page or media, hidden scrollbars...)
+	- Custom information about the media in the tab title
+	- Floating menu (mouse cursor over the top-left)
+	- Mouse wheel zooming (off by default)
+	- Centering content (default)
+	- Rotate/Flip (via shortcuts or from the menu)
+	- Sending the address of the media to different services (such as reverse image search)
+	- Frame extraction for animated images (GIF, APNG, WEBP)
+	- Handling SVG and data:URIs
+	- Forced inlining (show media instead of download)
+	- Native DASH, HLS, MSS streaming (if the browser can support it)
+	- Customizable media attributes (autoplay, loop, controls, mute, volume)
+	- Opening images from regular web-pages with right long-press or with shortcut (off by default)</pre>
+
+	<h3>Changelog <a href="https://drive.google.com/drive/folders/0Bx8fnUCX4W2IOTdESEFoM3luS1U"><small>Archive</small></a></h3>
+
+	<pre>
+	<b>+</b> Added feature
+	<b>*</b> Improved/changed feature
+	<b>#</b> Bug fixed</pre>
+
+	<ul class="versions">
+		<li id="v2020.402.1540"><b>2020.402.1540</b>
+		<pre>
+* Load original SVG, or manifest files (for streaming media) directly via a button, or automatically on error
+# Styling fixes
+* Update "Send to" URL list
+* Use newer libraries
+* Updated Russian translation (by <a href="https://github.com/Rodny0">Rodny</a>)
+		</pre>
+		</li>
+
+		<li id="v2019.1223.1811"><b>2019.1223.1811</b>
+		<pre>
+# (crx) Fix media detection via Content-Disposition
+# Fix unnecessary loading of <i>player.js</i> for SVGs (caused JS errors)
+* Improve streaming media type detection
+* Apply the <i>viewDataURI</i> option for all browsers
+* View SVGs directly via the ... menu icon
+* Show original error messages for invalid media (instead of trying to show the media)
+* Update external libraries to their newest versions
+* (crx) Make the <i>webNavigation</i> permission optional (to prevent Firefox from blocking updates, however this disables <b>View data:URIs</b>)
+* Updated German translation (by <a href="https://github.com/sioh">sioh</a>)
+		</pre>
+		</li>
+
+		<li id="v2019.1119.1805"><b>2019.1119.1805</b>
+		<pre>
+Warning: the following new features require new permissions (to detect all these media types)
++ (crx, ffx) Support viewing the following streaming formats (with bitrate selection): DASH, HLS, MSS
++ (crx, ffx) Option to view <i>SVG</i> and/or <i>data:</i> media files in an internal viewer
++ (crx, ffx) Media in-lining, which changes Content-Desposition <b>attachment</b> to <b>inline</b> (it shows the media instead of downloading it)
+* Wheel over scrollbars shouldn't zoom
+* Newer Maxthon compatibility
+* Always use black background for videos (becuase of fullscreen)
+		</pre>
+		</li>
+
+		<li id="v2019.705.1915"><b>2019.705.1915</b>
+		<pre>
+* Media detection for newer versions of Firefox
+* Allow mousedown propagation (solves conflict with other extensions)
+* (opener) Check background image on body if there are no other matches
+* (opener) Switch back to opener tab when closing an opened image
+# (opener) Regex couldn't match some background images
+		</pre>
+		</li>
+
+		<li id="v2019.321.1540"><b>2019.321.1540</b>
+		<pre>
++ New option: zooming when holding a modifier key
++ Allow changing the menu position (via CSS)
+# Updated send-to URLs
+* Other smaller fixes
+		</pre>
+		</li>
+
+		<li id="v2018.1202.1831"><b>2018.1202.1831</b>
+		<pre>
++ Frame exctractor for animated images now accepts parameters from the URL: <b>frm</b> - initial frame number, <b>full</b> - force full frame exctraction. Example: <code>https://url/animated_image.gif#<b>frm:23;full:1</b></code> (obviously this works only for those use this extension)
+* Other frame extractor imporvements
+# Event handling fixes (some clicks didn't register)
+# (opr) Shortcuts stopped working after cliking menu items
+# (opr) Workaround for percentage calculation in the title
+		</pre>
+		</li>
+
+		<li id="v2018.1129.1652"><b>2018.1129.1652</b>
+		<pre>
++ Export/Import for settings at the Info page in Options
++ New option: register clicks on the whole document, not just over the image
++ Custom trigger area for the menu as hidden option (can be set via the import feature): <b>menuTriggerArea</b> <i>(measured from the top left corner)</i>: [px, px] or ["%", "%"] or null for default values, which is the size of the menu itself
++ New hidden option: <b>scaling</b> (float, e.g. <i>1.5</i> => 150%) - it fakes the original dimensions. Special value: <b>*</b> ignores device scaling, so it renders the media at 100%. If negative value is used, the device scaling is ignored first, then the absolute of the scale value is applied
+# Other minor fixes
+		</pre>
+		</li>
+
+		<li id="v2018.805.1235"><b>2018.805.1235</b>
+		<pre>
+* Trigger area for the menu became the area of the menu itself (the area can be increased by setting transparent borders for the menu via custom CSS)
+# Prevent dragging on free selection in Firefox
+# Using mouse gesture extensions over the media wasn't possible
+# (ffx) Legacy extension compatibility in recent versions of Firefox
+		</pre>
+		</li>
+
+		<li id="v2018.617.1150"><b>2018.617.1150</b>
+		<pre>
+# (chr) Frame extractor styling interference with default viewer
+# (ffx) Workaround for full frame extraction in recent versions of Firefox
+# (ffx) Legacy extension compatibility in recent versions of Firefox
+* Use original dimensions for non-full frames (also outline them on hover, and show their dimensions in tooltip)
+		</pre>
+		</li>
+
+		<li id="v2017.1211.1515"><b>2017.1211.1515</b>
+		<pre>
+# (ffx) Resizing issue with cached images in newer Firefox versions
+# (sfr) Media detection fix for latest versions
+* Fixed a few issues related to messaging and browser detection
+		</pre>
+		</li>
+
+		<li id="v2017.917.1405"><b>2017.917.1405</b>
+		<pre>
+# (chr) Fix upscaling for newer versions of Chrome
+# (ffx,sfr) Fix image tab detection for latest versions of Firefox/Safari
+* Use SVG icons for the floating menu
+* Opener: try to catch elements with <i>pointer-events: none</i>
++ Add %size variable for the title text to show the media filesize (won't work in every case)
+		</pre>
+		</li>
+
+		<li id="v2017.502.1705"><b>2017.502.1705</b>
+		<pre>
+* Make upscaling more consitent across sizing modes
+* Allow dragging the image if that fits the view-port
+* Replace fit to width/height shortcuts with a simple fill
+# Fix zooming for rotated media
+# Flipping should flip only the content, not the whole bounding box
+# Fix video dimensions in title
+		</pre>
+		</li>
+
+		<li id="v2017.402.1400"><b>2017.402.1400</b>
+		<pre>
+* (ffx) Compatibility with latest Nightly builds
+# (ffx) Background page wasn't freed up when the extension got disabled
+		</pre>
+		</li>
+
+		<li id="v2017.219.2144"><b>2017.219.2144</b>
+		<pre>
++ Custom scale factor and snap points for zooming
+# (chr) In recent Chrome versions initial size couldn't be applied for images larger than the viewport
+* Default value for "Enlarge small images" has been changed to <b>50%</b>
+* Single click behaves as best fit (long-press function) on images that have the same width or height as their viewport, and they are in their original size or fit to the window
+* Opener now ignores empty data: URIs, also it will get the image source from <i>currentSrc</i> instead of <i>src</i>
+* Warning pop-up for frame extractor on possible high memory usage
+		</pre>
+		</li>
+
+		<li id="v2016.1113.1700"><b>2016.1113.1700</b>
+		<pre>
+# (chr) Make it compatible with Chrome 56+
+# Horizontal scrolling didn't activate in some cases
+		</pre>
+		</li>
+
+		<li id="v2016.1108.1758"><b>2016.1108.1758</b>
+		<pre>
+# (chr) Make it work on newer versions
+* (sfr) Improve video/audio detection
+* New versioning style (current UTC date)
+		</pre>
+		</li>
+
+		<li id="v1.0.9"><b>1.0.9 - June 10, 2016</b>
+		<pre>
+# (chr) Fix resizing for large images in recent Chromium based browsers
+* Improved panning
+		</pre>
+		</li>
+
+		<li id="v1.0.8"><b>1.0.8 - May 26, 2016</b>
+		<pre>
++ Made the "crx" platform compatible with Microsoft Edge
+# (chr) Sometimes the media couldn't be resized on first open
+# Floating menu wasn't removed from the DOM when it was disabled
+* Allow scripts to be removed from memory if they're not used anymore
+* Make use of <b>document.elementsFromPoint</b> in browsers that support it for image opening
+		</pre>
+		</li>
+
+		<li id="v1.0.7"><b>1.0.7 - April 10, 2016</b>
+		<pre>
+# Changing volume using shortcuts didn't work
+# (opr) Menu could stuck after panning
+# Flip shortucts were flipped
+* Updated URLs for search by image providers
+* (chr) Make use of <a href="https://developer.chrome.com/extensions/event_pages">Event Pages</a>
+* Other minor fixes
+		</pre>
+		</li>
+
+		<li id="v1.0.6"><b>1.0.6 - February 14, 2016</b>
+		<pre>
++ German translation by <a href="https://github.com/sioh">sioh</a>
+# Fix long-standing issues with rotated content (sizing, positioning, zooming...)
+# Scrolling didn't work with <i>overflow: auto</i>
+		</pre>
+		</li>
+
+		<li id="v1.0.5"><b>1.0.5 - November 01, 2015</b>
+		<pre>
++ Swedish translation by <a href="https://github.com/Najoj">Jojan (Johan Öhlin)</a>
+		</pre>
+		</li>
+
+		<li id="v1.0.4"><b>1.0.4 - October 07, 2015</b>
+		<pre>
+# Dynamically generated images (on the server) couldn't be loaded if the request was a POST request
+# The menu shouldn't be shown while Shift is being held
+* Default action for left long-press changed to best fit (instead of fit to width/height)
+* Drop fit to width/height as default modes
+* Drop option for long-press delay (300ms will be used)
+* Load host favicons when the list appears instead on mouse over
+* Add "loop" to default media attributes
+* Use upscaling for images only
+* (ffx) Disable browser functions for image while the extension is active (less conflict with the default viewer)
+		</pre>
+		</li>
+
+		<li id="v1.0.3"><b>1.0.3 - September 18, 2015</b>
+		<pre>
++ Orient images according to EXIF data (image-orientation: from-image, which is support only by Firefox at the moment)
++ Support horizontal wheeling to pan the image horizontally
+# (mxt) Fix frame extraction
+# Enlarging small images didn't work
+* Prevent the menu from appearing when the left mouse button is pressed
+		</pre>
+		</li>
+
+		<li id="v1.0.2"><b>1.0.2 - August 25, 2015</b>
+		<pre>
++ Shortcut (<b>Z</b>) and/or long-press to toggle wheel zooming
++ Shortcut (<b>B</b>) to switch between backgrounds
++ Shortcut (<b>P</b>) to pixelate the image (if the browser supports it)
+* New menu-icons
+* Use cursor keys to pan the image
+* Some preferences were renamed, so they'll lose their current values (custom CSS, list of "send to" hosts)
+# (mxt) Fix missing icon, and broken encoding
+* Various other changes/fixes
+		</pre>
+		</li>
+
+		<li id="v1.0.1"><b>1.0.1 - June 14, 2015</b>
+		<pre>
+# Fix flickering when opening media
+# (mxt) Locales were missing from the previous release
+# (chr) Fix black square beneath the audio player
+* Always show controls over audio player
+* Always enabled on media files (option was removed as well)
+* "Media attributes" option were renamed (so it needs to be reconfigured if someone used it)
+* The following altered media attributes/values will be saved: loop, controls, mute, volume
+* Minor visual changes
+		</pre>
+		</li>
+
+		<li id="v1.0.0"><b>1.0.0 - May 06, 2015</b>
+		<pre>
+# Use black background for videos in full-screen
+# Minor fixes with frame extraction
+* Update support for Opera 29+
+* Use more strict rules for detecting single tab images
+* Moving to <a href="https://github.com/Deathamns/Viewhance">GitHub</a>...
+		</pre>
+		</li>
+
+		<li id="v0.9.9"><b>0.9.9 - February 05, 2015</b>
+		<pre>
+# Fix image opening (in some cases invalid links were opened)
+* (ffx) Occasionally the extension couldn't initialize in time at browser start
+* (ffx) Minor optimizations/fixes
+		</pre>
+		</li>
+
+		<li id="v0.9.8"><b>0.9.8 - January 25, 2015</b>
+		<pre>
++ Korean translation by QbsidianH20 (유태종)
+# (ffx) Fix memory leak with content scripts
+# (ffx) Compatibility with StartupMaster add-on
+* Under the hood changes (should not affect functionality)
+		</pre>
+		</li>
+
+		<li id="v0.9.7"><b>0.9.7 - December 12, 2014</b>
+		<pre>
+# Audio player didn't load because of the extension
+# (ffx) Extension didn't work for redirected media
+* (ffx) If possible, load extension scripts only when mouse enters the page (with other internal changes)
+		</pre>
+		</li>
+
+		<li id="v0.9.6"><b>0.9.6 - November 17, 2014</b>
+		<pre>
+# (ffx) Improper clean-up when disabling the extension, and other insignificant changes for <a href="https://addons.mozilla.org/"><abbr title="addons.mozilla.org">AMO</abbr></a>
+* Minor styling changes
+		</pre>
+		</li>
+
+		<li id="v0.9.5"><b>0.9.5 - November 03, 2014</b>
+		<pre>
+# Zooming didn't work with mousewheel over the button in the floating menu
+* Some code polishing...
+		</pre>
+		</li>
+
+		<li id="v0.9.4"><b>0.9.4 - September 07, 2014</b>
+		<pre>
+* Configurable "Send to" hosts (plus a new default: Bing Image Match)
+* (mxt) Sliders for filters couldn't be changed by clicking on them (conflict with the default viewer)
+# (ffx) Right long-press conflict with Imagus
+		</pre>
+		</li>
+
+		<li id="v0.9.3"><b>0.9.3 - August 27, 2014</b>
+		<pre>
+* Video volume fixes/changes: should be defaulted to 1, not 0; use 0-100 instead of 0-1 scale, typo mute -> muted, Up/Down shortcuts for volume level
+# (chr) Styling not applied for some menu buttons (<abbr title="Content Security Policy">CSP</abbr> issue)
+# (ffx,mxt) Image became hidden when site used CSP (on these sites styling still won't work)
+# (ffx) Reset/Esc didn't work for videos
+--- <b>v0.9.2</b> --- (August 23, 2014)
++ Video support (modifiable parameters: autoplay, loop, mute, controls, volume) - click on the upper half of the video behaves same as with images, click over the lower half will pause/play the video
+* (ffx) e10s support, complying with <a href="https://addons.mozilla.org/"><abbr title="addons.mozilla.org">AMO</abbr></a> requirements
+# (mxt) Drag from right edge didn't work (conflict with the default viewer)
+		</pre>
+		</li>
+
+		<li id="v0.9.1"><b>0.9.1 - July 08, 2014</b>
+		<pre>
+# Filters couldn't be reset with right click
+# (ffx) The extension wasn't able to load/save preferences
+* New default style
+* Revert some shortcut changes
+* Added more buttons for the floating menu
+* Prevent showing the floating menu while panning
+* Borrowed opener (all methods combined into one shortcut) and frame extraction from Imagus
+		</pre>
+		</li>
+
+		<li id="v0.9"><b>0.9 - June 28, 2014</b>
+		<pre>
+* Separated from Imagus
++ Added custom CSS for styling, instead of giving individual settings for each option (background color, border...)
++ Floating menu (optional, enabled by default, it can be disabled via CSS, to bring up: move the cursor to the upper left edge of the page) (right click menu is no more)
+* Dropped some unnecessary options and shortcuts
+		</pre>
+		</li>
+	</ul>
+</body>

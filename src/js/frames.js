@@ -1,5 +1,3 @@
-/* global win, errorHandler, drawFullFrame */
-
 'use strict';
 
 var $ = function(id) {
@@ -21,8 +19,8 @@ var crc32 = (function() {
 
 	return function(s) {
 		var i = 0;
-		var length = s.length;
 		var crc = -1;
+		var length = s.length;
 
 		while ( i < length ) {
 			crc = crcTable[(crc ^ s.charCodeAt(i++)) & 0xff] ^ crc >>> 8;
@@ -65,7 +63,10 @@ var BinaryTools = function(data) {
 		while ( i++ < length ) {
 			curbyte = this.readByte(pos).toString(2);
 			bitarray.push(
-				this.zeropad.substr(0, this.zeropad.length - curbyte.length) + curbyte
+				this.zeropad.substr(
+					0,
+					this.zeropad.length - curbyte.length
+				) + curbyte
 			);
 		}
 
@@ -77,7 +78,8 @@ var BinaryTools = function(data) {
 			return null;
 		}
 
-		var pos;
+		var pos, i;
+		var integer = 0;
 
 		if ( position === void 0 || position < 0 ) {
 			pos = this.pos;
@@ -85,9 +87,6 @@ var BinaryTools = function(data) {
 		} else {
 			pos = position;
 		}
-
-		var i;
-		var integer = 0;
 
 		if ( this.littleEndian ) {
 			i = bytes - 1;
@@ -121,47 +120,47 @@ var BinaryTools = function(data) {
 	};
 };
 
-if ( !win.opera ) {
-	// Solves utf8 problems
-	win.btoa = function(b64str) {
-		var b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-		var c1, c2;
-		var pos = 0;
-		var res = '';
-		var mod = b64str.length % 3;
-		var l = b64str.length - mod;
+// Solves utf8 problems
+var b64enc = window.opera ? btoa : function(str) {
+	var c1, c2;
+	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	var mod = str.length % 3;
+	var l = str.length - mod;
+	var pos = 0;
+	var r = '';
 
-		while ( pos < l ) {
-			c1 = b64str.charCodeAt(pos++) & 0xff;
-			c2 = b64str.charCodeAt(pos++) & 0xff;
-			res += b64chars[c1 >> 2];
-			res += b64chars[(c1 & 3) << 4 | c2 >> 4];
-			c1 = b64str.charCodeAt(pos++) & 0xff;
-			res += b64chars[(c2 & 0x0f) << 2 | c1 >> 6];
-			res += b64chars[c1 & 0x3f];
-		}
+	while ( pos < l ) {
+		c1 = str.charCodeAt(pos++) & 0xff;
+		c2 = str.charCodeAt(pos++) & 0xff;
+		r += chars[c1 >> 2];
+		r += chars[(c1 & 3) << 4 | c2 >> 4];
+		c1 = str.charCodeAt(pos++) & 0xff;
+		r += chars[(c2 & 0x0f) << 2 | c1 >> 6];
+		r += chars[c1 & 0x3f];
+	}
 
-		if ( mod ) {
-			c1 = b64str.charCodeAt(pos++) & 0xff;
-			res += b64chars[c1 >> 2];
+	if ( mod === 0 ) {
+		return r;
+	}
 
-			if ( mod === 1 ) {
-				res += b64chars[(c1 & 3) << 4];
-				res += '==';
-			} else {
-				c2 = b64str.charCodeAt(pos++) & 0xff;
-				res += b64chars[(c1 & 3) << 4 | c2 >> 4];
-				res += b64chars[(c2 & 0x0f) << 2];
-				res += '=';
-			}
-		}
+	c1 = str.charCodeAt(pos++) & 0xff;
+	r += chars[c1 >> 2];
 
-		return res;
-	};
-}
+	if ( mod === 1 ) {
+		r += chars[(c1 & 3) << 4];
+		r += '==';
+	} else {
+		c2 = str.charCodeAt(pos++) & 0xff;
+		r += chars[(c1 & 3) << 4 | c2 >> 4];
+		r += chars[(c2 & 0x0f) << 2];
+		r += '=';
+	}
+
+	return r;
+};
 
 var maxSize = 20 * 1024 * 1024;
-var xhr = new win.XMLHttpRequest;
+var xhr = new XMLHttpRequest;
 
 xhr.overrideMimeType('text/plain; charset=x-user-defined');
 xhr.addEventListener('readystatechange', function() {
@@ -170,7 +169,9 @@ xhr.addEventListener('readystatechange', function() {
 
 		if ( contentLength && contentLength > maxSize ) {
 			this.abort();
-			errorHandler('Image is too large...');
+			document.dispatchEvent(new CustomEvent('extractor-event', {
+				detail: 'Image is too large...'
+			}));
 			return;
 		}
 	}
@@ -179,29 +180,42 @@ xhr.addEventListener('readystatechange', function() {
 		return;
 	}
 
+	var i, chunkSize, imgHead;
+
 	if ( !this.imgType ) {
 		// PNG or GIF or WEBP signature
 		imgHead = /^(?:\x89(PNG)\r\n\x1a\n|(GIF)8[79]a|RIFF....(WEBP)VP8X)/;
-
 		this.imgType = this.responseText.match(imgHead);
 
 		// Seems like in some cases a character encoding is applied anyway,
 		// however it's enough to check only the signature
-		if ( !this.imgType && (this.responseText[1] === 'P' && (chunkSize = 8)
-			|| this.responseText[0] === 'G' && (chunkSize = 6)
-			|| this.responseText[0] === 'R' && (chunkSize = 16)) ) {
-			this.imgType = this.responseText.slice(0, chunkSize).split('');
-
-			for ( i = 0; i < this.imgType.length; ++i ) {
-				this.imgType[i] = this.imgType[i].charCodeAt(0) & 0xff;
+		if ( !this.imgType ) {
+			if ( this.responseText[1] === 'P' ) {
+				chunkSize = 8;
+			} else if ( this.responseText[0] === 'G' ) {
+				chunkSize = 6;
+			} else if ( this.responseText[0] === 'R' ) {
+				chunkSize = 1;
 			}
 
-			this.imgType = String.fromCharCode.apply(null, this.imgType).match(imgHead);
+			if ( chunkSize ) {
+				this.imgType = this.responseText.slice(0, chunkSize).split('');
+
+				for ( i = 0; i < this.imgType.length; ++i ) {
+					this.imgType[i] = this.imgType[i].charCodeAt(0) & 0xff;
+				}
+
+				this.imgType = String.fromCharCode
+					.apply(null, this.imgType)
+					.match(imgHead);
+			}
 		}
 
 		if ( !this.imgType ) {
 			this.abort();
-			errorHandler('Not animated...');
+			document.dispatchEvent(new CustomEvent('extractor-event', {
+				detail: 'Not animated...'
+			}));
 			return;
 		}
 
@@ -214,15 +228,17 @@ xhr.addEventListener('readystatechange', function() {
 	}
 
 	if ( this.responseText.length > maxSize ) {
-		errorHandler('Image is too large...');
+		document.dispatchEvent(new CustomEvent('extractor-event', {
+			detail: 'Image is too large...'
+		}));
 		return;
 	}
 
-	var i, IHDR, chunkType, chunkSize;
+	var IHDR, chunkType;
 	var frames = [];
 	var bin = new BinaryTools(this.responseText);
 	var animation = {};
-	var imgHead = '';
+	imgHead = '';
 
 	if ( this.imgType === 'PNG' ) {
 		// https://wiki.mozilla.org/APNG_Specification
@@ -244,7 +260,11 @@ xhr.addEventListener('readystatechange', function() {
 				IHDR = bin.readString(5);
 				// Skip crc
 				bin.pos += 4;
-			} else if ( !frames.length && chunkType === 'acTL' ) {
+			} else if ( chunkType === 'acTL' ) {
+				if ( frames.length ) {
+					continue;
+				}
+
 				animation.numFrames = bin.readInt(4, bin.pos + 8);
 				animation.numPlays = bin.readInt(4, bin.pos + 12);
 				bin.pos += 20;
@@ -291,11 +311,11 @@ xhr.addEventListener('readystatechange', function() {
 
 				// Skip crc
 				bin.pos += 4;
-			} else if ( !frames.length ) {
+			} else if ( frames.length ) {
+				bin.pos += bin.readInt(4, bin.pos) + 12;
+			} else {
 				// Read the full chunk (length + chunk type + chunkdate + crc)
 				imgHead += bin.readString(bin.readInt(4, bin.pos) + 12);
-			} else {
-				bin.pos += bin.readInt(4, bin.pos) + 12;
 			}
 		}
 	} else if ( this.imgType === 'GIF' ) {
@@ -307,7 +327,7 @@ xhr.addEventListener('readystatechange', function() {
 				this.pos += this.readInt(1, this.pos) + 1;
 
 				if ( bin.pos >= bin.length ) {
-					throw this.imgType + ': end reached...';
+					throw Error(this.imgType + ': end reached...');
 				}
 			} while ( this.readInt(1, this.pos) !== 0x00 );
 
@@ -352,13 +372,16 @@ xhr.addEventListener('readystatechange', function() {
 					frames.push({
 						delay: bin.readInt(2, bin.pos + 2) * 10 || 100,
 						// -1 in order to match PNG's indexes, also treat 0 as 1
-						disposeOp: Math.max(0, parseInt(bin.packed.slice(3, -2), 2) - 1),
-									// sentinel + ext_label
-						data: bin.readString(4, bin.pos - 2) +
-									// with zero delay
-									bin.intToBytes(0, 2) +
-									// transparent color index + block terminator
-									bin.readString(2, bin.pos + 4)
+						disposeOp: Math.max(
+							0,
+							parseInt(bin.packed.slice(3, -2), 2) - 1
+						),
+						// sentinel + ext_label
+						data: bin.readString(4, bin.pos - 2)
+							// with zero delay
+							+ bin.intToBytes(0, 2)
+							// transparent color index + block terminator
+							+ bin.readString(2, bin.pos + 4)
 					});
 
 					bin.pos += 6;
@@ -429,7 +452,9 @@ xhr.addEventListener('readystatechange', function() {
 
 		// Animation flag
 		if ( bin.packed[6] === '0' ) {
-			errorHandler(this.imgType + ': not animated...');
+			document.dispatchEvent(new CustomEvent('extractor-event', {
+				detail: this.imgType + ': not animated...'
+			}));
 			return;
 		}
 
@@ -458,7 +483,9 @@ xhr.addEventListener('readystatechange', function() {
 			}
 
 			if ( !animation.ANIM ) {
-				errorHandler(this.imgType + ': ANIM chunk not found!');
+				document.dispatchEvent(new CustomEvent('extractor-event', {
+					detail: this.imgType + ': ANIM chunk not found!'
+				}));
 				return;
 			}
 
@@ -510,15 +537,32 @@ xhr.addEventListener('readystatechange', function() {
 		}
 	}
 
-	if ( frames.length < 1 ) {
-		errorHandler(this.imgType + ': not animated...');
+	if ( frames.length < 2 ) {
+		document.dispatchEvent(new CustomEvent('extractor-event', {
+			detail: this.imgType + ': not animated...'
+		}));
 		return;
 	}
 
+	if ( animation.width * animation.height * 4 * frames.length > 3e8 ) {
+		var memoryWarning = [
+			'Extracting frames from this file may consume a lot of memory!',
+			'Continue anyway?'
+		];
+
+		// eslint-disable-next-line no-alert
+		if ( !confirm(memoryWarning.join('\n')) ) {
+			return;
+		}
+	}
+
 	var generateImageSRC, wrap, speed, currentFrame;
+	var params = JSON.parse(document.body.dataset.params);
+	var drawFullFrame = !!params.fullFrames;
 	var canvas = document.createElement('canvas');
 	var ctx = canvas.getContext('2d');
-	var img = new Image;
+	// "new Image" doesn't work in Maxthon
+	var img = document.createElement('img');
 
 	canvas.width = animation.width;
 	canvas.height = animation.height;
@@ -529,20 +573,20 @@ xhr.addEventListener('readystatechange', function() {
 
 		generateImageSRC = function() {
 			var frm = frames[frames.idx];
-			var _IHDR = 'IHDR' +
-				bin.intToBytes(frm.width) +
-				bin.intToBytes(frm.height) +
-				IHDR;
+			var _IHDR = 'IHDR'
+				+ bin.intToBytes(frm.width)
+				+ bin.intToBytes(frm.height)
+				+ IHDR;
 
 			_IHDR += bin.intToBytes(crc32(_IHDR));
 
-			return 'data:image/png;base64,' + win.btoa(
-				'\x89PNG\r\n\x1a\n' +
-				chunkSize + _IHDR +
-				imgHead +
-				bin.intToBytes(frm.data.length - 4) + frm.data +
-				bin.intToBytes(crc32(frm.data)) +
-				imgEnd
+			return 'data:image/png;base64,' + b64enc(
+				'\x89PNG\r\n\x1a\n'
+				+ chunkSize + _IHDR
+				+ imgHead
+				+ bin.intToBytes(frm.data.length - 4) + frm.data
+				+ bin.intToBytes(crc32(frm.data))
+				+ imgEnd
 			);
 		};
 	} else if ( this.imgType === 'GIF' ) {
@@ -552,28 +596,30 @@ xhr.addEventListener('readystatechange', function() {
 		generateImageSRC = function() {
 			var frm = frames[frames.idx];
 
-			return 'data:image/gif;base64,' + win.btoa(
-				'GIF89a' +
-				bin.intToBytes(frm.width, 2) + bin.intToBytes(frm.height, 2) +
-				imgHead +
-				frm.data + chunkSize +
-				bin.readString(frm._data[0], frm._data[1]) +
-				';'
+			return 'data:image/gif;base64,' + b64enc(
+				'GIF89a'
+				+ bin.intToBytes(frm.width, 2) + bin.intToBytes(frm.height, 2)
+				+ imgHead
+				+ frm.data + chunkSize
+				+ bin.readString(frm._data[0], frm._data[1])
+				+ ';'
 			);
 		};
 	} else if ( this.imgType === 'WEBP' ) {
 		generateImageSRC = function() {
 			var frm = frames[frames.idx];
 
-			return 'data:image/webp;base64,' + win.btoa(
-				'RIFF' + bin.intToBytes(frm.data.length + 4) + 'WEBP' + frm.data
+			return 'data:image/webp;base64,' + b64enc(
+				'RIFF' + bin.intToBytes(frm.data.length + 4)
+				+ 'WEBP' + frm.data
 			);
 		};
 	}
 
 	var onImgLoad = function() {
+		var frame = frames[frames.idx];
+
 		if ( drawFullFrame ) {
-			var frame = frames[frames.idx];
 			var prev = frames[frames.idx - 1];
 
 			if ( prev ) {
@@ -619,9 +665,14 @@ xhr.addEventListener('readystatechange', function() {
 				0, 0
 			);
 		} else {
-			c.width = this.width;
-			c.height = this.height;
-			c.getContext('2d').drawImage(this, 0, 0);
+			c.getContext('2d').drawImage(this, frame.xOffset, frame.yOffset);
+
+			if ( canvas.width !== this.width
+				|| canvas.height !== this.height ) {
+				c.title = this.width + ' x ' + this.height
+					+ ' @ ' + frame.xOffset + ', ' + frame.yOffset;
+				c.className = 'partial-frame';
+			}
 		}
 
 		wrap.appendChild(c);
@@ -634,27 +685,31 @@ xhr.addEventListener('readystatechange', function() {
 
 		++frames.idx;
 		currentFrame.value = frames.idx;
+		currentFrame.nextElementSibling.value = currentFrame.value
+			+ ' / ' + frames.length;
 
 		processNextFrame(); // eslint-disable-line
 	};
 
-	var processNextFrame = function() {
-		if ( frames.idx < frames.length ) {
-			img.src = generateImageSRC();
-			frames[frames.idx].data = null;
-		} else {
-			img.removeEventListener('load', onImgLoad);
-			img = null;
-			done();
-			errorHandler(null);
-		}
-	};
-
 	var done = function() {
-		wrap.current = 0;
+		var wheelEventName = document.body.dataset.wheelEventName;
+		currentFrame.value = parseInt(params.initialFrame, 10) || 1;
+		currentFrame.nextElementSibling.value = currentFrame.value
+			+ ' / ' + frames.length;
+		wrap.current = currentFrame.value | 0;
 		wrap.children[wrap.children.length - 1].style.display = '';
 		wrap.children[wrap.current].style.display = 'inline-block';
-		currentFrame.value = 1;
+
+		var disableShowAll = function() {
+			wrap.addEventListener(wheelEventName, wrap.wheeler);
+			wrap.classList.remove('showall');
+
+			var highlighted = wrap.querySelector('.highlighted');
+
+			if ( highlighted ) {
+				highlighted.classList.remove('highlighted');
+			}
+		};
 
 		var onWrapMouseUp = function(e) {
 			if ( e.button !== 0 ) {
@@ -662,9 +717,10 @@ xhr.addEventListener('readystatechange', function() {
 			}
 
 			if ( e.ctrlKey ) {
-				if ( e.target.toDataURL && speed.value < 1 ) {
-					var canvasImg = new Image;
+				if ( e.target.toDataURL && speed.valueAsNumber < 1 ) {
+					var canvasImg = document.createElement('img');
 					canvasImg.src = e.target.toDataURL();
+					canvasImg.className = e.target.className;
 					this.replaceChild(canvasImg, e.target);
 					wrap.step(null);
 				}
@@ -676,63 +732,50 @@ xhr.addEventListener('readystatechange', function() {
 
 			if ( this.classList.contains('showall') ) {
 				if ( e.target && e.target.parentNode === wrap ) {
-					currentFrame.value = [].indexOf.call(wrap.childNodes, e.target) + 1;
+					currentFrame.value = [].indexOf.call(
+						wrap.childNodes,
+						e.target
+					) + 1;
 					wrap.step(null);
 				}
 
-				this.addEventListener(vAPI.browser.wheel, this.wheeler, false);
+				disableShowAll();
 			} else {
-				this.removeEventListener(vAPI.browser.wheel, this.wheeler, false);
+				this.removeEventListener(wheelEventName, this.wheeler);
+				var oldRect = e.target.getBoundingClientRect();
+				this.classList.add('showall');
+				var newRect = e.target.getBoundingClientRect();
+				e.target.classList.add('highlighted');
+				window.scrollTo(
+					newRect.left - oldRect.left,
+					newRect.top - oldRect.top
+				);
 			}
-
-			this.classList.toggle('showall');
 		};
 
-		wrap.addEventListener('mouseup', onWrapMouseUp);
-		wrap.addEventListener(vAPI.browser.wheel, wrap.wheeler, false);
-		currentFrame.addEventListener(vAPI.browser.wheel, wrap.wheeler, false);
+		wrap.wheeler = function(e) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
 
-		currentFrame.addEventListener('input', function() {
-			if ( parseFloat(speed.value, 10) !== 0 ) {
+			if ( speed.valueAsNumber ) {
 				wrap.stop();
 			}
 
 			if ( wrap.classList.contains('showall') ) {
-				onWrapMouseUp({button: 0});
+				disableShowAll();
 			}
 
-			wrap.step(null);
-		});
-
-		speed.addEventListener('input', function() {
-			wrap.speedValue = parseFloat(speed.value) || 0;
-
-			if ( wrap.speedValue === 0 ) {
-				wrap.stop();
-				wrap.addEventListener(vAPI.browser.wheel, wrap.wheeler, false);
-				return;
-			}
-
-			wrap.classList.remove('showall');
-			wrap.removeEventListener(vAPI.browser.wheel, wrap.wheeler, false);
-			wrap.animate();
-		});
-
-		wrap.wheeler = function(e) {
 			wrap.step((e.deltaY || -e.wheelDelta) > 0);
-			wrap.sotp();
-			e.preventDefault();
-			e.stopImmediatePropagation();
 		};
 
 		wrap.animate = function() {
 			clearTimeout(wrap.animationTimer);
-			wrap.step(wrap.speedValue < 0);
+			wrap.step(speed.valueAsNumber < 0);
 
-			if ( wrap.speedValue ) {
+			if ( speed.valueAsNumber ) {
 				wrap.animationTimer = setTimeout(
 					wrap.animate,
-					frames[wrap.current].delay / Math.abs(wrap.speedValue)
+					frames[wrap.current].delay / Math.abs(speed.valueAsNumber)
 				);
 			}
 		};
@@ -740,6 +783,10 @@ xhr.addEventListener('readystatechange', function() {
 		wrap.stop = function() {
 			clearTimeout(this.animationTimer);
 			speed.value = 0;
+
+			if ( !wrap.classList.contains('showall') ) {
+				wrap.addEventListener(wheelEventName, wrap.wheeler);
+			}
 		};
 
 		wrap.step = function(backward) {
@@ -770,6 +817,46 @@ xhr.addEventListener('readystatechange', function() {
 			currentFrame.nextElementSibling.value = currentFrame.value
 				+ ' / ' + frames.length;
 		};
+
+		currentFrame.addEventListener('input', function() {
+			if ( speed.valueAsNumber ) {
+				wrap.stop();
+			}
+
+			if ( wrap.classList.contains('showall') ) {
+				disableShowAll();
+			}
+
+			wrap.step(null);
+		});
+
+		speed.addEventListener('input', function() {
+			if ( !speed.valueAsNumber ) {
+				wrap.stop();
+				return;
+			}
+
+			wrap.classList.remove('showall');
+			wrap.animate();
+		});
+
+		wrap.addEventListener('mouseup', onWrapMouseUp);
+		wrap.addEventListener(wheelEventName, wrap.wheeler);
+		currentFrame.addEventListener(wheelEventName, wrap.wheeler);
+	};
+
+	var processNextFrame = function() {
+		if ( frames.idx < frames.length ) {
+			img.src = generateImageSRC();
+			frames[frames.idx].data = null;
+		} else {
+			img.removeEventListener('load', onImgLoad);
+			img = null;
+			done();
+			document.dispatchEvent(
+				new CustomEvent('extractor-event', {detail: null})
+			);
+		}
 	};
 
 	img.addEventListener('load', onImgLoad);
@@ -781,37 +868,44 @@ xhr.addEventListener('readystatechange', function() {
 	});
 
 	wrap = document.body;
-	wrap.className = 'frames';
 	wrap.textContent = '';
-	vAPI.buildNodes(wrap, [
-		{tag: 'a', attrs: {
-			'class': 'back',
-			href: win.location.href
-		}, text: '\u2190'},
-		' ',
-		{tag: 'input', attrs: {
-			type: 'number',
-			id: 'speed',
-			style: 'width: 55px; text-align: center;',
-			value: 0,
-			step: 0.5,
-			min: -10,
-			max: 10
-		}}, 'x ',
-		{tag: 'input', attrs: {
-			type: 'range',
-			id: 'current-frame',
-			style: 'width: 500px; vertical-align: middle;',
-			size: 6,
-			value: 1,
-			step: 1,
-			min: 1
-		}}, ' ',
-		{tag: 'output', attrs: {
-			'for': 'currentFrame'
-		}, text: '1 / ' + frames.length}, ' ',
-		{tag: 'div', attrs: {id: 'frames'}}
-	]);
+	wrap.className = 'frames';
+	// Workaround wrapper for interference with Chrome's default viewer
+	wrap = wrap.appendChild(document.createElement('div'));
+	var ce = document.createElement.bind(document);
+	var ct = document.createTextNode.bind(document);
+	var tp = wrap.appendChild(ce('div'));
+	tp.id = 'top-panel';
+	var n = tp.appendChild(ce('a'));
+	n.className = 'back';
+	n.href = document.body.dataset.isDataUrl
+		? location.href
+		: location.href.replace(/#.*/, '');
+	n.textContent = '\u2190';
+	tp.appendChild(ct(' '));
+	n = tp.appendChild(ce('input'));
+	n.type = 'number';
+	n.id = 'speed';
+	n.style.cssText = 'width: 55px; text-align: center';
+	n.value = 0;
+	n.step = 0.5;
+	n.min = -10;
+	n.max = 10;
+	tp.appendChild(ct('x '));
+	n = tp.appendChild(ce('input'));
+	n.type = 'range';
+	n.id = 'current-frame';
+	n.style = 'width: 500px; vertical-align: middle';
+	n.size = 6;
+	n.value = 1;
+	n.step = 1;
+	n.min = 1;
+	tp.appendChild(ct(' '));
+	n = tp.appendChild(ce('output'));
+	n.textContent = '1 / ' + frames.length;
+
+	wrap.appendChild(ct(' '));
+	wrap.appendChild(ce('div')).id = 'frames';
 
 	wrap = $('frames');
 	speed = $('speed');
@@ -822,8 +916,14 @@ xhr.addEventListener('readystatechange', function() {
 });
 
 xhr.addEventListener('error', function() {
-	errorHandler('Failed to load!');
+	document.dispatchEvent(new CustomEvent('extractor-event', {
+		detail: 'Failed to load!'
+	}));
 });
 
-xhr.open('GET', win.location.href, true);
+xhr.open(
+	'GET',
+	document.body.dataset.isDataUrl ? location.hash.slice(1) : location.href,
+	true
+);
 xhr.send();

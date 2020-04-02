@@ -1,82 +1,55 @@
 # Viewhance #
+
 A browser extension to enhance the browser's default media viewer.
 
-To try it out (when installed), open a media file ([image](http://upload.wikimedia.org/wikipedia/commons/e/ec/StLouisArchMultExpToneMapped.jpg) / [video](http://upload.wikimedia.org/wikipedia/commons/5/5f/Hdr_time_lapse_montage.ogg) / [audio](http://upload.wikimedia.org/wikipedia/en/3/3d/Sample_of_Daft_Punk's_Da_Funk.ogg)) in a new tab.
+To try it out (when installed), open a media file ([image](https://upload.wikimedia.org/wikipedia/commons/e/ec/StLouisArchMultExpToneMapped.jpg) / [video](https://upload.wikimedia.org/wikipedia/commons/d/de/Hdr_time_lapse_montage.ogv) / [audio](https://upload.wikimedia.org/wikipedia/en/3/3d/Sample_of_Daft_Punk's_Da_Funk.ogg)) in a new tab.
 
-Visit one of the extension stores (below) to see the list of features.
+[Install / Changelog / FAQ](https://tiny.cc/Viewhance)
 
-## Browser support / Installation ##
-Only the latest browser versions are fully supported. It may work on older versions, but extra effort won't be made to stretch the compatibility for the sake of outdated platforms.
+## Browser/platform support ##
+The following platforms are supported (for each the latest browser version):
 
-- [Firefox](https://addons.mozilla.org/addon/viewhance/) ~24+ (or its relatives; SeaMonkey, Waterfox, Cyberfox, Pale Moon...)
-- [Opera](http://tiny.cc/Viewhance-oex) 12
-- [Chromium](https://chrome.google.com/webstore/detail/ijabcgpjcbpphfagcaknnlcfeodbnkgp) ~22+ (or its relatives; Chrome, Opera 15+, CoolNovo, YaBrowser...)
-- [Safari](http://tiny.cc/Viewhance-safariextz) ~5.1+
-- [Maxthon](http://extension.maxthon.com/detail/index.php?view_id=2527) 4+
-
-## Contribution ##
-- **Translation**: You can use [this helper tool](https://rawgit.com/Deathamns/Viewhance/master/tools/localizer.html) for localizing strings. The result can be sent as a pull request on GitHub.
-- **Code**: if you have a bug-fix, or did some tweaks, then you can send a pull request with your changes. Criteria: Try to respect the code styling, use [`eslint`](http://eslint.org/), don't diverge from the main goal - viewing enhancements - (for instance, photo editing capability doesn't belong in this extension).
+- **crx** - many Chromium [browsers](https://en.wikipedia.org/wiki/Chromium_\(web_browser\)#Browsers_based_on_Chromium) ([Chrome](https://chrome.google.com/webstore/detail/impppjchnpfgknmbaaghfeopcgfoilac), Opera 15+, Vivaldi, Edge...), or browsers with WebExtension support ([Firefox](https://addons.mozilla.org/addon/viewhance/))
+- **xpi** - XUL based platforms (older Firefox, SeaMonkey, Pale Moon...)
+- **oex** - Opera 12 (Presto based)
+- **mxaddon** - Maxthon
+- **safariextz** (legacy) - Safari v5.1 - v12
 
 ## Build ##
 ```
-sh tools/build.sh
+./build.py [platform(s)] [-meta] [-min] [-pack] [-all] [-version=x.x.x]
 ```
 
-Arguments:
+All arguments are optional. The output and temporary files go into the `build` directory.  
+Without arguments the script will generate the necessary files for each non-disabled platform.  
+Additional information for specific platforms can be found in their directories.
 
-no arguments - Generates meta-data (manifest files, locales) into the `src` directory (all the generated files are listed in `.gitignore`).
+**`platf1 platf2...`** list of platforms (directory names under `platform/`) if building for all platforms is not desired  
+**`-meta`** generates only meta-data (localization, manifest files)  
+**`-pack`** creates installable/distributable packages (with `-meta` it will also generate meta files for updating)  
+**`-min`** compress source files (JS, HTML, CSS) (Java is required)  
+**`-all`** build disabled platforms as well (if it's not listed as a platform already)  
+**`-version=x.x.x`** custom version string, current date-time (YYYY.MMDD.HHII) if not set
 
-`clean-meta` - Removes meta-data from the `src` directory (platform arguments are ignored here, so it will remove all files).
-
-`xpi`, `oex`, `crx`, `safariextz`, `mxaddon` - If one of these are set, then the building will apply only for the specified platform (file extensions are used as platforms).
-
-`prep` - Prepares the project directory for the specified or all platforms, so it can be examined what files will be included in specific extension files.
-
-`pack` - Creates installable packages for the specified or all platforms. If no `prep` argument was given, then the platform directory will be removed from `build` after the package is ready.
-
-## Development ##
-In order to start hacking, the meta-data (manifest files and locales) needs to be generated, which can be done by running the following bash script (for Windows, it can be used with [Cygwin](https://cygwin.com/install.html)):
-
+Examples:
 ```
-sh tools/build.sh
-```
+# Prepare directories for non-disabled platforms
+./build.py
 
-Without any arguments it will simply run the `tools/build_meta.py` (Python 2/3) script, which could be used instead as well. This step prepares the `src` directory, from which it will be possible to install the extension on any browser (see below).
+# Prepare directories for Firefox (XUL) and Opera (Presto)
+./build.py xpi oex
 
-Installing from `src` allows to test the changes without any building (usually refreshing the page is enough).
+# Prepare directories and package them for every platform (including disabled)
+./build.py -pack -all
 
-Alternatively, the `build.sh` script is able to create the files for each platform under the `build` directory, and the extension could be installed from there too (see above how to use the build script). So, in the following installation methods the `build/**platform**` directory could be used instead of `src`.
+# Prepare, minify, and package for Chromium
+./build.py crx -min -pack
 
-Beside these, the extension can be built into a packaged file, which can be installed too (but that sounds tedious for developing).
-
-#### Firefox ####
-Create a [proxy file](https://developer.mozilla.org/en-US/Add-ons/Setting_up_extension_development_environment#Firefox_extension_proxy_file), which content will be the absolute path of the `src` directory, and its name should be the ID of the extension: `{00000c4c-fcfd-49bc-9f0d-78db44456c9c}`.
-Copy the created file into the [`path of your profile`](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data#w_how-do-i-find-my-profile)`/extensions` directory.
-
-#### Opera ####
-For Opera 12: Open the Extension manager (`Ctrl+Shift+E`), and drag-n-drop the generated `config.xml` file from the `src` directory onto the browser window.
-
-For Opera 15+ see Chromium.
-
-#### Chromium ####
-Open `chrome://extensions` in a tab, and drag-n-drop the `src` directory onto the page.
-
-#### Safari ####
-The extension files need to be placed in a folder named `Viewhance.safariextension` in oder to be able to load it via the Extension Builder.
-
-Use the build script to generate the `build/Viewhance.safariextension` platform directory for Safari, which you can use (or in Windows, create a hard link pointing to the `src` directory, see example at Maxthon below). After that in Safari:
-
-- `Settings / Preferences / Advanced`, tick the `Show Develop menu in menu bar` checkbox
-- Menu button, and choose `Develop / Show Extension Builder`
-- Click the `+` button at the bottom left, and choose `Add Extension`
-- Select the `Viewhance.safariextension` directory, and Install (assuming the developer certificates are already installed)
-
-#### Maxthon ####
-Since this platform is available on Windows only, creating a hard link under the user's `Addons` directory will install the extension. Something like this:
-
-```
-mklink /H /D /J Maxthon_install_path\UserData\Users\guest\Addons\Viewhance src
+# Generate meta-data for Maxthon and Safari
+./build.py -meta mxaddon safariextz
 ```
 
-(Of course, don't forget to delete the link if you don't use it anymore.)
+## Contribution ##
+- **Localization** You can use [this helper tool](https://deathamns.github.io/Viewhance/localizer.html) for translating strings. The result can be sent as a pull request on GitHub (instructions are shown when you export your work on the localizer page).
+- **Code** If you have a bug-fix, or did some tweaks, then you can send a pull request with your changes. Criteria: Try to respect the code styling, use [`eslint`](http://eslint.org/), don't diverge too much from the main goal; viewing enhancements.
+The code must work on all supported platforms, except if the browser's extension API doesn't provide appropriate functionality, then fail silently.
